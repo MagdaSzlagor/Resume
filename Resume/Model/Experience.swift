@@ -18,7 +18,7 @@ struct Experience: Decodable {
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy"
+        formatter.dateFormat = "dd-MM-yyyy"
         return formatter
     }()
     

@@ -15,15 +15,15 @@ protocol ResumeDetailsBusinessLogic {
 
 protocol ResumeDetailsDataStore {
     var cvTableViewDataSource: UITableViewDataSource? { get set }
+    var resume: Resume? { get set }
 }
 
 class ResumeDetailsInteractor: ResumeDetailsBusinessLogic, ResumeDetailsDataStore {
-    
+  
+    var resume: Resume?
     var cvTableViewDataSource: UITableViewDataSource?
-    
-    
     var presenter: ResumeDetailsPresentationLogic?
-    private var worker: ResumeDetailsWorker = ResumeDetailsWorker()
+    var worker: ResumeDetailsWorker = ResumeDetailsWorker()
     
     func fetchResumeDetails() {
         worker.fetchResumeDetails(onSuccess: { [weak self] (resume) in
@@ -38,10 +38,12 @@ class ResumeDetailsInteractor: ResumeDetailsBusinessLogic, ResumeDetailsDataStor
     }
     
     private func fetchResumeDetailsDidSucceed(with resume: Resume) {
+        self.resume = resume
         presenter?.presentResumeDetails(resume)
     }
     
     private func fetchResumeDetailsDidFailed(with error: NetworkingError) {
+        self.resume = nil
         presenter?.presentError(message: error.localizedDescription)
     }
 }

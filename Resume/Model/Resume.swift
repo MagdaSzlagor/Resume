@@ -8,7 +8,12 @@
 
 import Foundation
 
-struct Resume: Decodable {
+struct Resume: Decodable, Equatable {
+   
+    static func == (lhs: Resume, rhs: Resume) -> Bool {
+        return lhs.email == rhs.email && lhs.name == rhs.name && lhs.surname == lhs.surname
+    }
+    
     
     let email: String?
     let name: String?
